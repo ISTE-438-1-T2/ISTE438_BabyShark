@@ -1,0 +1,23 @@
+{
+  "name": "iste438_babyshark",
+  "version": "1.0.0",
+  "description": "RIT ISTE 438 Group BabyShark MongoDB Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ISTE-438-1-T2/ISTE438_BabyShark.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ISTE-438-1-T2/ISTE438_BabyShark/issues"
+  },
+  "homepage": "https://github.com/ISTE-438-1-T2/ISTE438_BabyShark#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
