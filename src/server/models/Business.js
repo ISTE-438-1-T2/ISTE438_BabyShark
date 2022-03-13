@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const BusinessSchema = new mongoose.Schema({
     deal: {
-        type: Boolean,
+        type: String,
         required: true
     },
     description: {
