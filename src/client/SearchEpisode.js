@@ -17,7 +17,7 @@ export default class SearchEpisode extends Component {
   }
 
   renderDeal = (dealData, iValue, modalBool) => {
-    return <Deal data={dealData} i={iValue} isModalOpen={modalBool}/>;
+    return <Deal resetEp={this.resetEpisodes} searchForEp={this.searchForEpisode} data={dealData} i={iValue} isModalOpen={modalBool}/>;
   }
 
   pressEnterHandle = (e) => {
@@ -39,7 +39,6 @@ export default class SearchEpisode extends Component {
             resultNode.setAttribute('class', `result${i}`);
             document.getElementsByClassName("resultsWrapper")[0].appendChild(resultNode);
             ReactDOM.render(this.renderDeal(response.data[i], i, false), document.getElementsByClassName(`result${i}`)[0]);
-            //console.log(this.renderDeal(response.data[i], i, false));
           }
       });
     } else {
@@ -52,7 +51,6 @@ export default class SearchEpisode extends Component {
             resultNode.setAttribute('class', `result${i}`);
             document.getElementsByClassName("resultsWrapper")[0].appendChild(resultNode);
             ReactDOM.render(this.renderDeal(response.data[i], i, false), document.getElementsByClassName(`result${i}`)[0]);
-            //console.log(this.renderDeal(response.data[i], i, false));
           }
       });
     }
@@ -82,24 +80,33 @@ export default class SearchEpisode extends Component {
 class Deal extends Component {
   constructor(props) {
     super(props);
-    this.state = { openModal: false, comment:"" };
+    this.state = { openModal: false, comment:"", commentIsChanged: false};
   }
 
   changeModal = (newOpenModal) => {
     this.setState({ openModal: newOpenModal });
-    if(!newOpenModal && this.state.comment !== "") {
+    //modal was closed and comment value not same as starting value
+    if(!newOpenModal && this.state.commentIsChanged) {
       this.insertCommentForEpisode();
     }
   }
 
   changeComment = (newComment) => {
     this.setState({ comment: newComment });
+    this.setState({ commentIsChanged: true });
   }
 
   insertCommentForEpisode = () => {
-    Axios.put(`http://localhost:8080/episode?comment=${this.state.comment}&id=${this.props.data._id}`).then(response => {
-      console.log('successfully updated a comment');
+    console.log('attempting update of comment');
+    Axios.put(`http://localhost:8080/episode?comment=${this.state.comment}&id=${this.props.data._id}`)
+    .then(response => {
+      console.log('successfully updated a comment: ' + response);
     });
+    this.props.resetEp();
+    //bit hacky, but works
+    setTimeout(() => {  
+      this.props.searchForEp(); 
+    }, 500);
   }
 
   render() {
