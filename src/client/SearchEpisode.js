@@ -64,8 +64,9 @@ export default class SearchEpisode extends Component {
         <div className="searchWrapper">
           <div className="example">
             <input onKeyPress={this.pressEnterHandle} type="text" placeholder="Search..." onChange={(event) => {
-                this.changeSearch(event.target.value);
-              }}></input>
+              this.changeSearch(event.target.value);
+            }}>
+            </input>
             <button id="searchButton" type="submit" onClick={this.searchForEpisode}><i className="fa fa-search"></i></button>
           </div>
           <div className="sortWrapper">
@@ -81,11 +82,24 @@ export default class SearchEpisode extends Component {
 class Deal extends Component {
   constructor(props) {
     super(props);
-    this.state = { openModal: false };
+    this.state = { openModal: false, comment:"" };
   }
 
   changeModal = (newOpenModal) => {
     this.setState({ openModal: newOpenModal });
+    if(!newOpenModal && this.state.comment !== "") {
+      this.insertCommentForEpisode();
+    }
+  }
+
+  changeComment = (newComment) => {
+    this.setState({ comment: newComment });
+  }
+
+  insertCommentForEpisode = () => {
+    Axios.put(`http://localhost:8080/episode?comment=${this.state.comment}&id=${this.props.data._id}`).then(response => {
+      console.log('successfully updated a comment');
+    });
   }
 
   render() {
@@ -121,6 +135,9 @@ class Deal extends Component {
           <p>{this.props.data.deal}</p>
           {/* we need to pull this from an image database for the project */}
           <img src={this.props.data.image} width="500" height="600"/>
+          <p>Comment:</p>
+          <textarea defaultValue={this.props.data.comment} onChange={(event) => {this.changeComment(event.target.value)}}></textarea>
+          <hr/>
           <div>
             {<button onClick={(e) => {e.stopPropagation();this.changeModal(false);}}>Close</button>}
           </div>

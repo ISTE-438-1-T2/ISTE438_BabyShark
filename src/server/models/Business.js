@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const BusinessSchema = new mongoose.Schema({
+    _id: {
+        type: mongoose.ObjectId,
+        required: true
+    },
     deal: {
         type: String,
         required: true
@@ -84,6 +88,10 @@ const BusinessSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true
+    },
+    comment: {
+        type: String,
+        required: false
     }
 },
 { 

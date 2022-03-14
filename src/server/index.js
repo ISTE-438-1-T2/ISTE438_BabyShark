@@ -20,7 +20,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.get('/episode', (req, res) => {
     if(req.query.title) {
         //business title search
-        BusinessModel.find( { title: new RegExp(req.query.title, "i") }, 'deal description episode category entrepreneurs location website askedFor exchangeForStake valuation season shark1 shark2 shark3 shark4 shark5 title coords image', function (error, results) {
+        BusinessModel.find( { title: new RegExp(req.query.title, "i") }, '_id deal description episode category entrepreneurs location website askedFor exchangeForStake valuation season shark1 shark2 shark3 shark4 shark5 title coords image comment', function (error, results) {
             if (error) return (error);
             res.send(results);
         });
@@ -45,6 +45,19 @@ app.get('/episode', (req, res) => {
                 res.send(results);
            });
     }
+});
+
+app.put('/episode', (req, res) => {
+    console.log('attempting to update entry with id: ' + req.query.id + ' with comment: ' + req.query.comment);
+    BusinessModel.updateOne({_id: req.query.id}, 
+        {comment: req.query.comment}, function (err, docs) {
+        if (err){
+            console.log(err)
+        }
+        else{
+            console.log("Updated Docs : ", docs);
+        }
+    });
 });
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
