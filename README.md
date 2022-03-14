@@ -14,3 +14,8 @@ The objectives for this project are:
 
 ## Gantt Chart
 **[Lucidchart link](https://lucid.app/lucidchart/abd79303-bfd5-4c3a-b6e2-41a55779b998/edit?invitationId=inv_ca9fceae-3ff5-4bd9-bf6f-31e531116bbc)**
+
+## Startup Process
+* Run `npm install` from the root project directory
+* Run `npm run build` from the root project directory
+* Run `npm run start` from the root project directory
