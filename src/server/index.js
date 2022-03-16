@@ -4,6 +4,8 @@ const BusinessModel = require('./models/Business');
 const BusinessLocationModel = require('./models/BusinessLocation');
 
 const app = express();
+const cors = require('cors');
+app.options('*', cors());
 
 mongoose.connect('mongodb://127.0.0.1:27017/sharkdb', 
     {
