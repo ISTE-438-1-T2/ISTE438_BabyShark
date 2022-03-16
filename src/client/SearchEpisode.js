@@ -30,7 +30,7 @@ export default class SearchEpisode extends Component {
   searchForEpisode = () => {
     if(`${this.state.searchString}`.match(/^((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)$/)) {
       console.log('searching by coords');
-      Axios.get(`http://localhost:8080/episode?coords=${this.state.searchString}`).then(response => {
+      Axios.get(`http://ec2-52-71-179-65.compute-1.amazonaws.com:8080/episode?coords=${this.state.searchString}`).then(response => {
           this.resetEpisodes();
           console.log(response);
           for(let i=0; response.data.length > i; i++) {
@@ -43,7 +43,7 @@ export default class SearchEpisode extends Component {
           }
       });
     } else {
-      Axios.get(`http://localhost:8080/episode?title=${this.state.searchString}`).then(response => {
+      Axios.get(`http://ec2-52-71-179-65.compute-1.amazonaws.com:8080/episode?title=${this.state.searchString}`).then(response => {
           this.resetEpisodes();
           console.log(response);
           for(let i=0; response.data.length > i; i++) {
@@ -97,7 +97,7 @@ class Deal extends Component {
   }
 
   insertCommentForEpisode = () => {
-    Axios.put(`http://localhost:8080/episode?comment=${this.state.comment}&id=${this.props.data._id}`).then(response => {
+    Axios.put(`http://ec2-52-71-179-65.compute-1.amazonaws.com:8080/episode?comment=${this.state.comment}&id=${this.props.data._id}`).then(response => {
       console.log('successfully updated a comment');
     });
   }
