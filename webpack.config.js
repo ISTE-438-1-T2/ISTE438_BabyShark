@@ -34,11 +34,9 @@ module.exports = {
   devServer: {
     port: 3000,
     open: true,
-    disableHostCheck: true,
-    host: '0.0.0.0',
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://ec2-52-71-179-65.compute-1.amazonaws.com:8080'
+      '/api': 'http://localhost:8080'
     }
   },
   plugins: [
