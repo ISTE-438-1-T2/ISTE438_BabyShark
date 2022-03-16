@@ -19,3 +19,10 @@ The objectives for this project are:
 * Run `npm install` from the root project directory
 * Run `npm run build` from the root project directory
 * Run `npm run start` from the root project directory
+
+## Server Startup (Temporary!)
+* Run `nohup nodemon --exec npm run server &` from root project directory
+* Run `nohup nodemon --exec npm run client &` from root project directory
+
+## Server Shutdown
+* On existing EC2 instance, you can run `knode` from anywhere to kill all current running Node processes. This command executes `ps aux | grep node | awk '{print $2}' | xargs -n1 | xargs kill -9 $1` which can also be run from anywhere on the server.
