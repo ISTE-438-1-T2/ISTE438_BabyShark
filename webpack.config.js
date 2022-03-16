@@ -38,7 +38,7 @@ module.exports = {
     host: '0.0.0.0',
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:8080'
+      '/api': 'http://ec2-52-71-179-65.compute-1.amazonaws.com:8080'
     }
   },
   plugins: [
