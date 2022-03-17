@@ -117,21 +117,33 @@ class Deal extends Component {
       classStyle = "resultDark";
     }
 
+    var deal = "";
+    if (this.props.data.deal == "True") {
+      deal = "A deal was made!"
+    }
+    else if (this.props.data.deal == "False"){
+      deal = "A deal was not made."
+    }
+
+    var loc = "https://www.google.com/maps/embed/v1/view?key=AIzaSyDeif8Yb1wg-r1ehql7awBQSEXG3CV8Rlg&center=" + this.props.data.coords.lat + "," + this.props.data.coords.lng + "&zoom=18&maptype=satellite";
+    console.log(this.props.data.lat);
     return (
       <div className={classStyle} onClick={() => {this.changeModal(true)}}>
-        {this.props.data.title} S{this.props.data.season}, EP{this.props.data.episode}
+        {this.props.data.title} Season {this.props.data.season}, Episode {this.props.data.episode}
         <Modal isOpen={this.state.openModal} onRequestClose={(e) => {e.stopPropagation();this.changeModal(false);}}>
-          <h2>{this.props.data.title}</h2>
-          <p>S{this.props.data.season}, EP{this.props.data.episode}</p>
+          <h1>{this.props.data.title}</h1>
+          <p>Season {this.props.data.season}, Episode {this.props.data.episode}</p>
           <p>{this.props.data.description}</p>
-          <p>{this.props.data.category}</p>
-          <p>{this.props.data.website}</p>
-          <p>{this.props.data.location}</p>
-          <p>{this.props.data.coords.lat}, {this.props.data.coords.long}</p>
-          <p>{this.props.data.entrepreneurs}</p>
-          <p>{this.props.data.askedFor}</p>
-          <p>{this.props.data.exchangeForStake}</p>
-          <p>{this.props.data.valuation}</p>
+          <p><u>Category</u>: {this.props.data.category}</p>
+          <a href={this.props.data.website}>{this.props.data.website}</a>
+          <p>Located in {this.props.data.location}</p>
+          <p>{this.props.data.coords.lat}, {this.props.data.coords.lng}</p>
+          <iframe width="550" height="500" src={loc}></iframe>
+          <p>Started by {this.props.data.entrepreneurs}</p>
+          <p><u>Initial Ask</u>: ${this.props.data.askedFor}</p>
+          <p><u>Exchanged For Stake</u>: ${this.props.data.exchangeForStake}</p>
+          <p><u>Data Valuation</u>: ${this.props.data.valuation}</p>
+          <p><u>Sharks Present</u>:</p>
           <ul>
             <li>{this.props.data.shark1}</li>
             <li>{this.props.data.shark2}</li>
@@ -139,9 +151,9 @@ class Deal extends Component {
             <li>{this.props.data.shark4}</li>
             <li>{this.props.data.shark5}</li> 
           </ul>
-          <p>{this.props.data.deal}</p>
+          <p>{deal}</p>
           {/* we need to pull this from an image database for the project */}
-          <img src={this.props.data.image} width="500" height="600"/>
+          <img src={this.props.data.image} width="500"/>
           <p>Comment:</p>
           <textarea defaultValue={this.props.data.comment} onChange={(event) => {this.changeComment(event.target.value)}}></textarea>
           <hr/>
