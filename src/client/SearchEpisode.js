@@ -67,10 +67,6 @@ export default class SearchEpisode extends Component {
             </input>
             <button id="searchButton" type="submit" onClick={this.searchForEpisode}><i className="fa fa-search"></i></button>
           </div>
-          <div className="sortWrapper">
-              Sort by <span className="sortFunction">Relevance</span>
-              <i className="fa fa-chevron-down" aria-hidden="true"></i>
-          </div>
         </div>
       </React.Fragment>
     )
