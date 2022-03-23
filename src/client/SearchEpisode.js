@@ -30,7 +30,7 @@ export default class SearchEpisode extends Component {
   searchForEpisode = () => {
     if(`${this.state.searchString}`.match(/^((\-?|\+?)?\d+(\.\d+)?),\s*((\-?|\+?)?\d+(\.\d+)?)$/)) {
       console.log('searching by coords');
-      Axios.get(`http://ec2-52-71-179-65.compute-1.amazonaws.com:8080/episode?coords=${this.state.searchString}`).then(response => {
+      Axios.get(`http://localhost:8080/episode?coords=${this.state.searchString}`).then(response => {
           this.resetEpisodes();
           console.log(response);
           for(let i=0; response.data.length > i; i++) {
@@ -42,7 +42,7 @@ export default class SearchEpisode extends Component {
           }
       });
     } else {
-      Axios.get(`http://ec2-52-71-179-65.compute-1.amazonaws.com:8080/episode?title=${this.state.searchString}`).then(response => {
+      Axios.get(`http://localhost:8080/episode?title=${this.state.searchString}`).then(response => {
           this.resetEpisodes();
           console.log(response);
           for(let i=0; response.data.length > i; i++) {
@@ -94,7 +94,7 @@ class Deal extends Component {
 
   insertCommentForEpisode = () => {
     console.log('attempting update of comment');
-    Axios.put(`http://ec2-52-71-179-65.compute-1.amazonaws.com:8080/episode?comment=${this.state.comment}&id=${this.props.data._id}`)
+    Axios.put(`http://localhost:8080/episode?comment=${this.state.comment}&id=${this.props.data._id}`)
     .then(response => {
       console.log('successfully updated a comment: ' + response);
     });
@@ -121,7 +121,7 @@ class Deal extends Component {
       deal = "A deal was not made."
     }
 
-    var loc = "https://www.google.com/maps/embed/v1/view?key=AIzaSyDeif8Yb1wg-r1ehql7awBQSEXG3CV8Rlg&center=" + this.props.data.coords.lat + "," + this.props.data.coords.lng + "&zoom=18&maptype=satellite";
+    var loc = "https://www.google.com/maps/embed/v1/view?key=AIzaSyDeif8Yb1wg-r1ehql7awBQSEXG3CV8Rlg&center=" + this.props.data.coords.lat + "," + this.props.data.coords.long + "&zoom=18&maptype=satellite";
     console.log(this.props.data.lat);
     return (
       <div className={classStyle} onClick={() => {this.changeModal(true)}}>
