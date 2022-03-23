@@ -2,10 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const BusinessModel = require('./models/Business');
 const BusinessLocationModel = require('./models/BusinessLocation');
+const cors = require('cors');
 
 const app = express();
-var cors = require('cors');
-app.use(cors());
+const corsOptions = {
+    origin: "http://ec2-52-71-179-65.compute-1.amazonaws.com:3000"
+};
+
+app.use(cors(corsOptions));
 
 mongoose.connect('mongodb://127.0.0.1:27017/sharkdb', 
     {
