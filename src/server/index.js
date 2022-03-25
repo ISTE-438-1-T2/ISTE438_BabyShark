@@ -31,21 +31,25 @@ app.get('/episode', (req, res) => {
             res.send(results);
         });
     } else if(req.query.coords) {
-        let lat = req.query.coords.split(" ").join("").split(",")[0];
-        let long = req.query.coords.split(" ").join("").split(",")[1];
+        let latString = req.query.coords.split(" ").join("").split(",")[0];
+        let longString = req.query.coords.split(" ").join("").split(",")[1];
+		let lat = Number(latString);
+		let long = Number(longString);
         console.log(lat + "_" + long);
         //coords search (finds businesses within 25 miles of search
-        BusinessLocationModel.find({
-            location: {
-             $near: {
-              $maxDistance: 40000,
+        BusinessModel.find({
+            coords: {
+             $geoNear: {
+              $maxDistance: 40000, 
               $geometry: {
                type: "Point",
-               coordinates: [long, lat]
+               coordinates: [long, lat],
+			   index: '2dsphere'  //probably unnecessary line but just in case
               }
              }
             }
            }).find((error, results) => {
+			    //console.log("Hello. Error happened here.");
                 console.log(error);
                 if (error) return (error);
                 res.send(results);
