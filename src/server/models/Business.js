@@ -25,10 +25,10 @@ const BusinessSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    location: {
-        type: String,
-        required: true
-    },
+	//Blown up during geo query work, use script if need to add locations.
+    //location: {
+
+    //},
     website: {
         type: String,
         required: true
@@ -81,10 +81,15 @@ const BusinessSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
-    coords: {
-        type: Object,
-        required: true
-    },
+	//Old coords, in case we need it for some reason
+    //coords: {
+        //type: Object,
+        //required: true
+    //},
+	coords: {
+		type: { type: String, default: "Point" },
+		coordinates: [],
+	},
     image: {
         type: String,
         required: true
@@ -94,10 +99,16 @@ const BusinessSchema = new mongoose.Schema({
         required: false
     }
 },
+
+
 { 
     collection : 'sharkepisodes' 
 }
 );
+
+
+//moving index to here instead of new schema
+BusinessSchema.index({ coords: "2dsphere"});
 
 const Business = mongoose.model('BusinessData', BusinessSchema);
 module.exports = Business;
