@@ -45,6 +45,13 @@ export default class SearchEpisode extends Component {
       Axios.get(`http://localhost:8080/episode?title=${this.state.searchString}`).then(response => {
           this.resetEpisodes();
           console.log(response);
+          // let x = document.createElement('img');
+          // var base64 = Buffer.from(response.data, 'base64').toString();
+          // x.src = "data:image/jpeg;base64," + base64;
+          // x.src = "data:image/png;base64," + response.data.file;
+          // <img src="data:image/png;base64,{{ image }}" alt="{{ image }}"> 
+          
+          // document.getElementsByClassName("resultsWrapper")[0].appendChild(x);
           for(let i=0; response.data.length > i; i++) {
             //create Deal to display on screen (includes card and modal for extra data)
             let resultNode = document.createElement('div');
@@ -133,7 +140,7 @@ class Deal extends Component {
           <p><u>Category</u>: {this.props.data.category}</p>
           <a href={this.props.data.website}>{this.props.data.website}</a>
           <p>Located in {this.props.data.location}</p>
-          <p>{this.props.data.coords.lat}, {this.props.data.coords.lng}</p>
+          <p>{this.props.data.coords.lat}, {this.props.data.coords.long}</p>
           <iframe width="550" height="500" src={loc}></iframe>
           <p>Started by {this.props.data.entrepreneurs}</p>
           <p><u>Initial Ask</u>: ${this.props.data.askedFor}</p>
@@ -149,7 +156,7 @@ class Deal extends Component {
           </ul>
           <p>{deal}</p>
           {/* we need to pull this from an image database for the project */}
-          <img src={this.props.data.image} width="500"/>
+          <img src={"data:image/jpeg;base64,"+this.props.data.file} width="500"/>
           <p>Comment:</p>
           <textarea defaultValue={this.props.data.comment} onChange={(event) => {this.changeComment(event.target.value)}}></textarea>
           <hr/>

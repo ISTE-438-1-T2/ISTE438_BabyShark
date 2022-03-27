@@ -97,6 +97,10 @@ const BusinessSchema = new mongoose.Schema({
     comment: {
         type: String,
         required: false
+    },
+    file: {
+        type: String,
+        required: true
     }
 },
 
