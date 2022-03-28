@@ -5,7 +5,7 @@ var cors = require('cors');
 
 const app = express();
 const corsOptions = {
-    origin: "http://localhost:3000"
+    origin: "http:// [[AWS SERVER ADDRESS HERE ]] :3000"
 };
 
 app.use(cors(corsOptions));
@@ -24,7 +24,7 @@ var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.get('/episode', async (req, res) => {
+app.get('/api/episode', async (req, res) => {
     if(req.query.title) {
         //business title search
         BusinessModel.find({$or: [{ description: new RegExp(req.query.title, "i") }, { title: new RegExp(req.query.title, "i") }]} , '_id deal description episode category entrepreneurs location website askedFor exchangeForStake valuation season shark1 shark2 shark3 shark4 shark5 title coords image comment', async function (error, results) {
@@ -79,7 +79,7 @@ app.get('/episode', async (req, res) => {
     }
 });
 
-app.put('/episode', (req, res) => {
+app.put('/api/episode', (req, res) => {
     console.log('attempting to update entry with id: ' + req.query.id + ' with comment: ' + req.query.comment);
     BusinessModel.updateOne({_id: req.query.id}, 
         {comment: req.query.comment}, function (err, docs) {
