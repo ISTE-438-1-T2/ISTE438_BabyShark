@@ -15,14 +15,23 @@ The objectives for this project are:
 ## Gantt Chart
 **[Lucidchart link](https://lucid.app/lucidchart/abd79303-bfd5-4c3a-b6e2-41a55779b998/edit?invitationId=inv_ca9fceae-3ff5-4bd9-bf6f-31e531116bbc)**
 
-## Startup Process
+## Startup Process (Local Machine)
+### Requires NodeJS, NPM, and MongoDB to be installed for local development
 * Run `npm install` from the root project directory
+* Run `mongoimport --db sharkdb --collection sharkepisodes --file sharkdata.json --jsonArray` from the `/db` directory
+* Run either the `load_images_to_db.sh` if you are on Linux/Unix or `load_images_to_db.bat` if you are on Windows from the `/images`directory
 * Run `npm run build` from the root project directory
-* Run `npm run start` from the root project directory
+* Run `npm run dev` from the root project directory
 
-## Server Startup (Temporary!)
-* Run `nohup nodemon --exec npm run server &` from root project directory
-* Run `nohup nodemon --exec npm run client &` from root project directory
+## Server Startup
+* Run `npm install` from the root project directory
+* Run `npm i -g nodemon` from the root project directory
+* Run `mongoimport --db sharkdb --collection sharkepisodes --file sharkdata.json --jsonArray` from the `/db` directory
+* Run either the `load_images_to_db.sh` if you are on Linux/Unix or `load_images_to_db.bat` if you are on Windows from the `/images`directory
+* Run `npm run build` from the root project directory
+* Run `sudo chmod +x startup.sh` from the root project directory
+* Run `./startup.sh` from the root project directory
+* (Optional!) Run `tail -f nohup.out` from the root project directory to see launch information and output logs
 
 ## Server Shutdown
-* On existing EC2 instance, you can run `knode` from anywhere to kill all current running Node processes. This command executes `ps aux | grep node | awk '{print $2}' | xargs -n1 | xargs kill -9 $1` which can also be run from anywhere on the server.
+* On existing EC2 instance, you can run `ps aux | grep node | awk '{print $2}' | xargs -n1 | xargs kill -9 $1` from anywhere on the server to kill any currently running Node processes.
