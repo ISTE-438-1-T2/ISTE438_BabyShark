@@ -35,3 +35,40 @@ The objectives for this project are:
 
 ## Server Shutdown
 * On existing EC2 instance, you can run `ps aux | grep node | awk '{print $2}' | xargs -n1 | xargs kill -9 $1` from anywhere on the server to kill any currently running Node processes.
+
+## Server Information
+NOTE: This guide was written using an AWS EC2 instance of Ubuntu Server 20.04
+
+The application can be ran in a multitude of ways; Apache, Python Web, etc; but for this we will be using Nginx. This can be installed by running `sudo apt-get install nginx` from any location on the server. Once it is installed, run `sudo nano /etc/nginx/sites-enabled/default` to edit the default site configuration. 
+
+Scroll down to the section that starts with `server_name`, and change the `_;` to the Elastic IP of your AWS instance, for example `server_name 123.456.7.89;`
+
+Then, delete the entire block that says `location /` and replace it with the following:
+`location / {
+    proxy_pass http://localhost:3000,
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+ }
+ 
+ location /api {
+    proxy_pass http://localhost:8080,
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+ }`
+ 
+If you are changing the port numbers of the Client or Server, make sure they are reflected above, respectively.
+ 
+Then, from the root project directory, run `nano webpack.config.js`. Scroll to the bottom and make sure of two things: First, that your /api proxy is set to the correct port; and Second, that `disableHostCheck: true,` appears inside the devServer section after `open: true,`. If not, add it.
+ 
+Press `Ctrl + X`, then `Ctrl + Y`, then `Enter` to save your changes.
+
+Then, run `nano ./src/server/index.js`. Make note of your ec2 address, should look something like `http://ec2-00-00-000-00.compute-1.amazonaws.com` and replace anywhere it says `localhost` with that address, making sure to keep the ports. Scroll down and change both app.put and app.listen calls to `/api/episode`, assuming you set NGINX up as stated above.
+
+Press `Ctrl + X`, then `Ctrl + Y`, then `Enter` to save your changes.
+
