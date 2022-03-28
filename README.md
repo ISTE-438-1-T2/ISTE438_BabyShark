@@ -44,7 +44,7 @@ The application can be ran in a multitude of ways; Apache, Python Web, etc; but 
 Scroll down to the section that starts with `server_name`, and change the `_;` to the Elastic IP of your AWS instance, for example `server_name 123.456.7.89;`
 
 Then, delete the entire block that says `location /` and replace it with the following:
-`location / {
+```location / {
     proxy_pass http://localhost:3000,
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -60,7 +60,7 @@ Then, delete the entire block that says `location /` and replace it with the fol
     proxy_set_header Connection 'upgrade';
     proxy_set_header Host $host;
     proxy_cache_bypass $http_upgrade;
- }`
+ }```
  
 If you are changing the port numbers of the Client or Server, make sure they are reflected above, respectively.
  
